@@ -141,7 +141,7 @@ bool LinklistClass::deleteNode(size_t index)
     {
         LinklistNodeStruct *deleteNode = currentNode->next;
         currentNode->next = deleteNode->next;
-        deleteNode->prev->next = currentNode;
+        deleteNode->next->prev = currentNode;
         if (deleteNode == head)
             head = currentNode;
         dataCounter--;
