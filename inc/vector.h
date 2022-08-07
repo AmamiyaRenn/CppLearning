@@ -20,11 +20,23 @@ struct Vector2f
     Vector2f operator-(const Vector2f &v) const { return Vector2f(x - v.x, y - v.y); }
     Vector2f operator*(const float r) const { return Vector2f(x * r, y * r); }
     // 自加
-    void operator+=(const Vector2f &v) { x += v.x, y += v.y; }
+    Vector2f &operator+=(const Vector2f &v)
+    {
+        x += v.x, y += v.y;
+        return *this;
+    }
     // 自减
-    void operator-=(const Vector2f &v) { x -= v.x, y -= v.y; }
+    Vector2f &operator-=(const Vector2f &v)
+    {
+        x -= v.x, y -= v.y;
+        return *this;
+    }
     // 自乘
-    void operator*=(const Vector2f &v) { x *= v.x, y *= v.y; }
+    Vector2f &operator*=(const Vector2f &v)
+    {
+        x *= v.x, y *= v.y;
+        return *this;
+    }
     // 返回自身的标准化值
     Vector2f normalize() const
     {
