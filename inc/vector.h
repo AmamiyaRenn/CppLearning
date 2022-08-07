@@ -26,9 +26,20 @@ struct Vector2f
     // 自乘
     void operator*=(const Vector2f &v) { x *= v.x, y *= v.y; }
     // 返回自身的标准化值
-    Vector2f normalize() const {};
+    Vector2f normalize() const
+    {
+        const float magnitude = norm();
+        const float invMag = 1 / magnitude;
+        return Vector2f(x * invMag, y * invMag);
+    }
     // 将自身标准化（化为单位向量）
-    void normalized(){};
+    void normalized()
+    {
+        const float magnitude = norm();
+        const float invMag = 1 / magnitude;
+        x = x * invMag;
+        y = y * invMag;
+    }
     // 二范数
     float norm() const { sqrt(x * x + y * y); }
     // 点积

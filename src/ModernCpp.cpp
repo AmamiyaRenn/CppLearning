@@ -13,16 +13,11 @@ using namespace std;
 
 int main()
 {
-    // Vector2f x(1), y(2);
-    // // Swap(x, y);
-    // Vector2f ans = x + y;
+    Vector2f x(1), y(2);
+    Vector2f ans = (x + y).normalize();
     // cout << x.x << " " << y.x << endl;
-    // cout << ans.x << " " << ans.y << endl;
+    cout << ans.x << " " << ans.y << endl;
     // ans += y;
     // cout << ans.x << " " << ans.y << endl;
-    bool flag = true;
-    int x = 0;
-    x = flag ? 1 : 0;
-    cout << x << endl;
     return 0;
 }
