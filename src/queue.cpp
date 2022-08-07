@@ -12,7 +12,10 @@ using namespace std;
 
 int main()
 {
-    QueueClass *queue = new QueueClass(4);
+    QueueClass<int> *queue = new QueueClass<int>(4);
+    {
+        QueueClass<int> copyQueue = *queue;
+    }
     while (true)
     {
         string operate;
@@ -23,7 +26,7 @@ int main()
 
         if (operate == "e") // 入队一个元素
         {
-            float x;
+            int x;
             cin >> x;
             if (cin.fail())
             {
@@ -35,7 +38,7 @@ int main()
         }
         else if (operate == "d") // 出队一个元素，并把这个元素显示出来
         {
-            float x;
+            int x;
             queue->dequeue(x);
             cout << x << endl;
         }
