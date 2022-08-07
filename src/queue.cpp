@@ -65,7 +65,7 @@ int main()
             queue->dequeue(x);
             cout << x << endl;
         }
-        else if (operate == "dm") // 出队n个元素，并显示最后一个出队的元素
+        else if (operate == "dm") // 出队n个元素，并显示出队的元素
         {
             size_t n;
             cin >> n;
