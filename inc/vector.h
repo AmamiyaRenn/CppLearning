@@ -41,7 +41,7 @@ struct Vector2f
         y = y * invMag;
     }
     // 二范数
-    float norm() const { sqrt(x * x + y * y); }
+    float norm() const { return sqrt(x * x + y * y); }
     // 点积
     float dot(const Vector2f &v) const { return x * v.x + y * v.y; }
     // 投影
