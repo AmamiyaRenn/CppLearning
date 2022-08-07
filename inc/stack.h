@@ -13,7 +13,7 @@
 class StackClass
 {
 public:
-    StackClass(size_t capacity) : capacity(capacity), topPointer(0) { data = new float[capacity]; }
+    StackClass(size_t capacity) : capacity(capacity), topPointer(0), data(new float[capacity]){};
     ~StackClass() { delete[] data; }
     // 栈空
     bool isEmpty() const { return topPointer <= 0; }

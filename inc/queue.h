@@ -15,24 +15,27 @@ template <class T>
 class QueueClass
 {
 public:
-    QueueClass(size_t capacity) : capacity(capacity), headIndex(0), tailIndex(0), dataCounter(0) { data = new T[capacity]; }
+    QueueClass(size_t capacity) : capacity(capacity), headIndex(0), tailIndex(0), dataCounter(0), data(new T[capacity]){};
+    // 实现初始化时深拷贝
+    QueueClass(const QueueClass<T> &queueCopied) : capacity(queueCopied.capacity), headIndex(queueCopied.headIndex), tailIndex(queueCopied.tailIndex), dataCounter(queueCopied.dataCounter), data(new T[capacity])
+    {
+        for (size_t i = 0; i < dataCounter; i++)
+            this->data[(headIndex + i) % capacity] = queueCopied.data[(headIndex + i) % capacity];
+    }
     ~QueueClass() { delete[] data; }
     // 队空
-    bool isEmpty() const
-    {
-        return dataCounter <= 0;
-    }
+    bool isEmpty() const { return dataCounter <= 0; }
     // 队满
     bool isFull() const { return dataCounter >= capacity; }
     // 获得队首值
-    T getFront() const { return data[headIndex]; }
+    T &getFront() const { return data[headIndex]; }
     /**
      * @brief 入队
      * @param value 入队的值
      * @return true 入队成功
      * @return false 入队失败
      */
-    bool enqueue(T value)
+    bool enqueue(const T &value)
     {
         if (isFull())
             return false;
@@ -44,7 +47,62 @@ public:
         }
         return true;
     }
-    bool dequeue(T &value);
+    /**
+     * @brief 批量入队
+     * @param valueAddress 被拷贝的值的首地址
+     * @param len 长度
+     * @return true 入队成功
+     * @return false 入队失败
+     */
+    bool enqueue(T *valueAddress, size_t len)
+    {
+        if (tailIndex < capacity - len && dataCounter < capacity - len) // 如果剩余内存连续并且剩余长度大于数据长度
+        {
+            memcpy(&data[tailIndex], valueAddress, len * sizeof(T)); // 拷贝的是字节数   用memcpy快一点
+            tailIndex = (tailIndex + 1) % capacity;
+            dataCounter += len;
+            return true;
+        }
+        else
+        {
+            for (size_t i = 0; i < capacity; i++)
+                if (!enqueue(*(valueAddress + i)))
+                    return false;
+            return true;
+        }
+    }
+    /**
+     * @brief 出队并记录出队值
+     * @param value 记录出队值的值
+     * @return true 出队成功
+     * @return false 出队失败
+     */
+    bool dequeue(T &value)
+    {
+        if (isEmpty())
+            return false;
+        else
+        {
+            value = data[headIndex];
+            headIndex = (headIndex + 1) % capacity;
+            dataCounter--;
+        }
+        return true;
+    }
+    /**
+     * @brief 出队并记录出队值
+     * @param valueAddress 被拷贝的值的首地址
+     * @param len 长度
+     * @return true 出队成功
+     * @return false 出队失败
+     */
+    bool dequeue(T *valueAddress, size_t len)
+    {
+        for (size_t i = 0; i < len; i++)
+            if (!dequeue(*(valueAddress + i)))
+                return false;
+        return true;
+    }
     // 展示队内元素
     void show()
     {
@@ -60,24 +118,5 @@ private:
     size_t dataCounter; // 数据计数器
     T *data;            // 数据，动态申请
 };
-
-template <class T>
-/**
- * @brief 出队并记录出队值
- * @param value 记录出队值的值
- * @return true 出队成功
- * @return false 出队失败
- */
-bool QueueClass<T>::dequeue(T &value)
-{
-    if (isEmpty())
-        return false;
-    else
-    {
-        value = data[headIndex];
-        headIndex = (headIndex + 1) % capacity;
-        dataCounter--;
-    }
-}
 
 #endif

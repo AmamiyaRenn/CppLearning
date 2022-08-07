@@ -12,8 +12,9 @@
 
 struct Coodinate2f : public Vector2f
 {
-    float angle; // 平面角(rad)
-    float mag;   // 欧氏距离
+    using Vector2f::Vector2f; // 使用基类的构造函数
+    float angle;              // 平面角(rad)
+    float mag;                // 欧氏距离
     float getAngle() const { return angle; }
     float getMag() const { return mag; }
     void calMag() { mag = norm(); }
