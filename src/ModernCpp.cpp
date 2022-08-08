@@ -7,7 +7,7 @@
  */
 #include <iostream>
 #include "inc/MyMath.h"
-#include "inc/vector.h"
+#include "inc/coodinate.h"
 
 using namespace std;
 
@@ -20,6 +20,9 @@ int main()
     ans = -y;             // 重载负号
     cout << result << endl;
     cout << ans << endl;
+    Coodinate2f c2f(3);
+    c2f += Vector2f(x);
+    cout << c2f << endl;
 
     return 0;
 }
