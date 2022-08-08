@@ -16,6 +16,14 @@ int main()
 {
     QueueClass<dataX> *queue = new QueueClass<dataX>(4);
     {
+        queue->enqueue(1);
+        queue->enqueue(2);
+        queue->enqueue(3);
+        QueueClass<dataX> copyQueue(4);
+        copyQueue = *queue;
+        copyQueue.show();
+    }
+    {
         QueueClass<dataX> copyQueue = *queue;
     }
     while (true)

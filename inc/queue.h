@@ -8,6 +8,7 @@
 #ifndef _QUEUE_H
 #define _QUEUE_H
 
+#include <stdlib.h>
 #include <iostream>
 
 // 循环队列类
@@ -15,14 +16,30 @@ template <class T>
 class QueueClass
 {
 public:
+    // 构造函数
     QueueClass(size_t capacity) : capacity(capacity), headIndex(0), tailIndex(0), dataCounter(0), data(new T[capacity]){};
-    // 实现初始化时深拷贝
+    // 拷贝构造函数，实现初始化时深拷贝
     QueueClass(const QueueClass<T> &queueCopied) : capacity(queueCopied.capacity), headIndex(queueCopied.headIndex), tailIndex(queueCopied.tailIndex), dataCounter(queueCopied.dataCounter), data(new T[capacity])
     {
         for (size_t i = 0; i < dataCounter; i++)
-            this->data[(headIndex + i) % capacity] = queueCopied.data[(headIndex + i) % capacity];
+            data[(headIndex + i) % capacity] = queueCopied.data[(headIndex + i) % capacity];
     }
+    // 析构函数
     ~QueueClass() { delete[] data; }
+    // 拷贝赋值函数
+    QueueClass &operator=(const QueueClass &queueCopied)
+    {
+        if (this == &queueCopied) // 检查是否是自己
+            return *this;
+        delete[] data;
+        capacity = queueCopied.capacity;
+        headIndex = queueCopied.headIndex;
+        tailIndex = queueCopied.tailIndex;
+        dataCounter = queueCopied.dataCounter;
+        data = new T[capacity];
+        memcpy(data, queueCopied.data, dataCounter * sizeof(T)); // 用memcpy快一点
+        return *this;
+    }
     // 队空
     bool isEmpty() const { return dataCounter <= 0; }
     // 队满
@@ -58,7 +75,7 @@ public:
     {
         if (tailIndex < capacity - len && dataCounter < capacity - len) // 如果剩余内存连续并且剩余长度大于数据长度
         {
-            memcpy(&data[tailIndex], valueAddress, len * sizeof(T)); // 拷贝的是字节数   用memcpy快一点
+            memcpy(&data[tailIndex], valueAddress, len * sizeof(T)); // 用memcpy快一点
             tailIndex = (tailIndex + 1) % capacity;
             dataCounter += len;
             return true;
