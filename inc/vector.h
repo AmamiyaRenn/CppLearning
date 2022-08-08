@@ -9,6 +9,7 @@
 #define _VECTOR_H
 
 #include <math.h>
+#include <iostream>
 
 struct Vector2f
 {
@@ -16,8 +17,16 @@ struct Vector2f
     Vector2f() : x(0), y(0){};
     Vector2f(float x) : x(x), y(x){};
     Vector2f(float x, float y) : x(x), y(y){};
-    Vector2f operator+(const Vector2f &v) const { return Vector2f(x + v.x, y + v.y); }
-    Vector2f operator-(const Vector2f &v) const { return Vector2f(x - v.x, y - v.y); }
+    // 重载流输出符
+    friend std::ostream &operator<<(std::ostream &os, const Vector2f &u) { return os << "(" << u.x << ", " << u.y << ")"; }
+    // 正号
+    friend Vector2f operator+(const Vector2f &u) { return u; }
+    // 负号
+    friend Vector2f operator-(const Vector2f &u) { return Vector2f(-u.x, -u.y); }
+    // 加法
+    friend Vector2f operator+(const Vector2f &u, const Vector2f &v) { return Vector2f(u.x + v.x, u.y + v.y); }
+    // 减法
+    friend Vector2f operator-(const Vector2f &u, const Vector2f &v) { return Vector2f(u.x - v.x, u.y - v.y); }
     Vector2f operator*(const float r) const { return Vector2f(x * r, y * r); }
     // 自加
     Vector2f &operator+=(const Vector2f &v)
@@ -37,6 +46,10 @@ struct Vector2f
         x *= v.x, y *= v.y;
         return *this;
     }
+    // 相同
+    bool operator==(const Vector2f &v) const { return x == v.x && y == v.y; }
+    // 不同
+    bool operator!=(const Vector2f &v) const { return x != v.x || y != v.y; }
     // 返回自身的标准化值
     Vector2f normalize() const
     {

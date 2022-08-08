@@ -15,9 +15,11 @@ int main()
 {
     Vector2f x(1), y(2);
     Vector2f ans = (x + y).normalize();
-    // cout << x.x << " " << y.x << endl;
-    cout << ans.x << " " << ans.y << endl;
-    // ans += y;
-    // cout << ans.x << " " << ans.y << endl;
+    cout << ans << endl;  // 流输出符重载
+    Vector2f result = +x; // 重载正号
+    ans = -y;             // 重载负号
+    cout << result << endl;
+    cout << ans << endl;
+
     return 0;
 }
