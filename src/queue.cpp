@@ -55,7 +55,7 @@ int main()
                 cin.clear();
                 continue;
             }
-            float x;
+            dataX x;
             for (size_t i = 0; i < n; i++)
             {
                 cin >> x;

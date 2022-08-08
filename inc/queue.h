@@ -26,7 +26,7 @@ public:
     }
     // 析构函数
     ~QueueClass() { delete[] data; }
-    // 拷贝赋值函数
+    // 拷贝赋值函数，实现赋值时深拷贝
     QueueClass &operator=(const QueueClass &queueCopied)
     {
         if (this == &queueCopied) // 检查是否是自己
