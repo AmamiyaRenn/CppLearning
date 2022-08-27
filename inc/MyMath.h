@@ -9,7 +9,7 @@
 #define _MYMATH_H
 
 #define PI 3.14159265f
-constexpr float PIfunc(float x) { x *PI; }
+constexpr float PIfunc(float x) { return x *PI; }
 
 template <class T>
 void Swap(T &x, T &y)
