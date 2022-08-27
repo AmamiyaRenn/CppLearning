@@ -10,4 +10,4 @@ project(linklist)
 add_executable(linklist src/linklist.cpp)
 
 project(modernCpp)
-add_executable(modernCpp src/modernCpp.cpp)
+add_executable(modernCpp src/ModernCpp.cpp)
